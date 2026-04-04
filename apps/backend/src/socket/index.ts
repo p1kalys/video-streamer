@@ -23,7 +23,11 @@ const eventQueue = new Map<string, QueuedEvent[]>();
 export const initSocket = (httpServer: HttpServer) => {
   io = new SocketServer(httpServer, {
     cors: {
-      origin: ['https://video-streamer-frontend.vercel.app', 'http://localhost:5173'],
+      origin: function (origin, callback) {
+        // Allow requests with no origin (like mobile apps or curl requests)
+        if (!origin) return callback(null, true);
+        return callback(null, true);
+      },
       credentials: true,
       methods: ['GET', 'POST'],
       allowedHeaders: ['Content-Type', 'Authorization']

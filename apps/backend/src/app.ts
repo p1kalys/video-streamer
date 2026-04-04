@@ -13,7 +13,11 @@ app.use(helmet({
   crossOriginResourcePolicy: { policy: "cross-origin" }
 }));
 app.use(cors({
-  origin: ['https://video-streamer-frontend.vercel.app', 'http://localhost:5173'],
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+    return callback(null, true);
+  },
   credentials: true,
   exposedHeaders: ['Content-Range', 'Accept-Ranges', 'Content-Length'],
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
