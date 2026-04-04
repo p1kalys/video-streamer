@@ -1,0 +1,9 @@
+package-lock.json
+node_modules/
+dist/
+.env
+.env.local
+uploads/
+*.log
+ref-docs/
+test-*.html
