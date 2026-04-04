@@ -2,5 +2,11 @@
   "buildCommand": "cd ../.. && npm run build --workspace=packages/shared && cd apps/frontend && npm install && npm run build",
   "outputDirectory": "../../apps/frontend/dist",
   "installCommand": "npm install",
-  "framework": null
+  "framework": null,
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/"
+    }
+  ]
 }
