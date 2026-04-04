@@ -23,9 +23,10 @@ const eventQueue = new Map<string, QueuedEvent[]>();
 export const initSocket = (httpServer: HttpServer) => {
   io = new SocketServer(httpServer, {
     cors: {
-      origin: '*',
+      origin: ['https://video-streamer-frontend.vercel.app', 'http://localhost:5173'],
       credentials: true,
       methods: ['GET', 'POST'],
+      allowedHeaders: ['Content-Type', 'Authorization']
     },
     pingTimeout: 120000,  // 2 minutes - increased for large uploads
     pingInterval: 25000,
@@ -57,12 +58,12 @@ export const initSocket = (httpServer: HttpServer) => {
     const userId = socket.data.user.userId;
     const room = `user_${userId}`;
     const transport = socket.conn.transport.name;
-    
+
     console.log(`✅ User connected: ${userId} (Socket: ${socket.id}, Transport: ${transport})`);
 
     // Join user to their personal room
     socket.join(room);
-    
+
     // Confirm room join
     const socketsInRoom = io.sockets.adapter.rooms.get(room);
     console.log(`🚪 User ${userId} joined room '${room}'. Clients in room: ${socketsInRoom?.size || 0}`);
@@ -89,19 +90,19 @@ export const initSocket = (httpServer: HttpServer) => {
     socket.on('error', (error) => {
       console.error(`🔥 Socket error for user ${userId}:`, error);
     });
-    
+
     // Handle ping/pong for connection testing
     socket.on('ping', () => {
       socket.emit('pong');
       console.log(`💓 Ping received from user ${userId}, sent pong`);
     });
-    
+
     // Send a test event to confirm connection
-    socket.emit('connected', { 
-      userId, 
+    socket.emit('connected', {
+      userId,
       socketId: socket.id,
       transport: transport,
-      message: 'Successfully connected to Socket.io server' 
+      message: 'Successfully connected to Socket.io server'
     });
   });
 
@@ -123,7 +124,7 @@ export const emitToUser = (userId: string, event: string, data: any) => {
   const room = `user_${userId}`;
   const socketsInRoom = io.sockets.adapter.rooms.get(room);
   const clientCount = socketsInRoom ? socketsInRoom.size : 0;
-  
+
   if (clientCount > 0) {
     // Socket is connected, emit immediately
     io.to(room).emit(event, data);
