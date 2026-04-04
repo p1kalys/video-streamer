@@ -13,9 +13,11 @@ app.use(helmet({
   crossOriginResourcePolicy: { policy: "cross-origin" }
 }));
 app.use(cors({
-  origin: '*', // Allow all origins for development
+  origin: ['https://video-streamer-frontend.vercel.app', 'http://localhost:5173'],
   credentials: true,
-  exposedHeaders: ['Content-Range', 'Accept-Ranges', 'Content-Length']
+  exposedHeaders: ['Content-Range', 'Accept-Ranges', 'Content-Length'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
 }));
 app.use(morgan('dev'));
 
