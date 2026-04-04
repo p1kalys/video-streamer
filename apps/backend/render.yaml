@@ -2,10 +2,22 @@ services:
   - type: web
     name: video-streamer-backend
     env: node
-    buildCommand: cd ../.. && npm run build --workspace=packages/shared && cd apps/backend && npm run build
-    startCommand: npm start
+    buildCommand: cd ../.. && npm install && npm run build --workspace=packages/shared && npm install --workspace=apps/backend && npm run build --workspace=apps/backend
+    startCommand: cd apps/backend && npm start
     envVars:
       - key: NODE_ENV
         value: production
       - key: PORT
         value: 10000
+      - key: MONGODB_URI
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+      - key: CORS_ORIGIN
+        sync: false
+      - key: CLOUDINARY_CLOUD_NAME
+        sync: false
+      - key: CLOUDINARY_API_KEY
+        sync: false
+      - key: CLOUDINARY_API_SECRET
+        sync: false
