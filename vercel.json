@@ -6,7 +6,7 @@
   "routes": [
     {
       "src": "/.*",
-      "dest": "/index.html"
+      "dest": "/apps/frontend/dist/index.html"
     }
   ]
 }
