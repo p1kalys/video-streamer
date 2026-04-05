@@ -1,6 +1,0 @@
-{
-  "buildCommand": "cd ../.. && npm run build --workspace=packages/shared && cd apps/frontend && npm install && npm run build",
-  "outputDirectory": "dist",
-  "installCommand": "npm install",
-  "framework": null
-}

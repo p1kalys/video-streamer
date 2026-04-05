@@ -5,7 +5,8 @@
     "type": "module",
     "scripts": {
         "dev": "vite",
-        "build": "tsc && vite build",
+        "build": "npm run build:shared && vite build",
+        "build:shared": "cd ../../packages/shared && npm install && npm run build",
         "preview": "vite preview"
     },
     "dependencies": {
