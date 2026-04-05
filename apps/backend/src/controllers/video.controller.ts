@@ -170,7 +170,6 @@ export const getVideoById = async (req: Request, res: Response) => {
 
     const video = await Video.findOne({
       _id: videoId,
-      uploadedBy: req.user?.userId,
       deletedAt: null,
     });
 

@@ -61,10 +61,6 @@ export default function DashboardPage() {
       if (searchTerm) params.append('search', searchTerm);
       if (sensitivityFilter !== 'all') params.append('sensitivity', sensitivityFilter);
 
-      if (user?.role === 'viewer') {
-        params.append('userOnly', 'true');
-      }
-
       const response = await api.get<{
         success: true;
         data: { videos: Video[]; pagination: { page: number; limit: number; total: number; pages: number } };
